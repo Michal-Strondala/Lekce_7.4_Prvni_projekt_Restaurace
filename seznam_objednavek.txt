@@ -1,5 +1,11 @@
-com.engeto.first.project.Order@421faab1
-com.engeto.first.project.Order@2b71fc7e
-com.engeto.first.project.Order@5ce65a89
-com.engeto.first.project.Order@25f38edc
-com.engeto.first.project.Order@1a86f2f1
+** Objednávky pro stůl č. 4 **
+****
+1. Nanuk Míša  (30.0 Kč):	17:12-17:18	 číšník č. 2
+2. Kofola velká 4x (130.0 Kč):	15:25-15:29	 číšník č. 3
+3. Pizza Grande  (130.0 Kč):	15:29-16:10	 číšník č. 4
+******
+** Objednávky pro stůl č. 1 **
+****
+1. Kofola velká 2x (65.0 Kč):	13:47- objednávka nedokončena	 číšník č. 2
+2. Hranolky  (25.0 Kč):	13:53- objednávka nedokončena	 číšník č. 3
+******

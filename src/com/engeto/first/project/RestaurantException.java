@@ -1,7 +1,7 @@
 package com.engeto.first.project;
 
-public class DishException extends Exception {
-    public DishException(String message) {
+public class RestaurantException extends Exception {
+    public RestaurantException(String message) {
         super(message);
     }
 }
