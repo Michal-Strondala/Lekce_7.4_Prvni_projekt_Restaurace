@@ -1,22 +1,17 @@
 import com.engeto.first.project.*;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
-
-//        ** Objednávky pro stůl č.  4 **
-//****
-//        1. Kofola velká 4x (130 Kč):    15:25-15:29 číšník č. 3
-//        2. Pizza Grande (130 Kč):   15:29-16:10 číšník č. 4
-//        3. Nanuk Míša (30 Kč):  17:12-17:18 číšník č. 2
         try {
 
             // Vytvoření objektu dish
-            Dish kofola = new Dish(1000, "Kofola velká", 32.5, 4, Category.DRINK);
-            Dish pizzaGrande = new Dish(2000, "Pizza Grande", 130, 41, Category.FOOD);
-            Dish nanukMisa = new Dish(3000, "Nanuk Míša", 30, 5, Category.FOOD);
-            Dish hranolky = new Dish(4000, "Hranolky", 25, 20, Category.SIDE_DISH);
+            Dish kofola = new Dish(1000, "Kofola velká", BigDecimal.valueOf(32.5), 4, Category.DRINK);
+            Dish pizzaGrande = new Dish(2000, "Pizza Grande", BigDecimal.valueOf(130), 41, Category.FOOD);
+            Dish nanukMisa = new Dish(3000, "Nanuk Míša", BigDecimal.valueOf(30), 5, Category.FOOD);
+            Dish hranolky = new Dish(4000, "Hranolky", BigDecimal.valueOf(25), 20, Category.SIDE_DISH);
 
             // Přidání dishe do cookbooku
             Cookbook cookbook = new Cookbook();
@@ -99,13 +94,8 @@ public class Main {
             } catch (RestaurantException e) {
                 System.err.println(e.getLocalizedMessage());
             }
-
-
-
-
         } catch (RestaurantException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

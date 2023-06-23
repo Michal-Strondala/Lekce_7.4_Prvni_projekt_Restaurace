@@ -1,19 +1,22 @@
 package com.engeto.first.project;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Order /*implements Comparable<Order>*/{
+import static java.math.RoundingMode.HALF_UP;
+
+public class Order {
     // Atributy
     private Waiter waiter; // číslo číšníka
     private LocalTime orderedTime; // čas zadání objednávky
     private LocalTime fulfilmentTime; // čas vyřízení objednávky
     private Dish dishFromCurrentMenu; // objednané jídlo/pití z menu
     private String note; // poznámka zákazníka
-    //private static int nextId = 1;
-    //private int orderCount = nextId++;
     private int orderedAmount; // počet kusů v objednávce
+
 
     // Konstruktory
 
@@ -90,8 +93,9 @@ public class Order /*implements Comparable<Order>*/{
         this.orderedAmount = orderedAmount;
     }
 
-    public double getTotalPrice() {
-        return dishFromCurrentMenu.getPrice() * this.getOrderedAmount();
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = dishFromCurrentMenu.getPrice().multiply(BigDecimal.valueOf(this.getOrderedAmount()));
+        return totalPrice.setScale(0, RoundingMode.HALF_UP);
     }
 
     public boolean isFinished() {
@@ -100,34 +104,4 @@ public class Order /*implements Comparable<Order>*/{
 
         return false;
     }
-
-//    public boolean isTheSameWaiter() {
-//        if (getWaiterId() == getWaiterId())
-//            return true;
-//
-//        return false;
-//    }
-
-
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Order order = (Order) o;
-//        return waiterId == order.waiterId;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(waiterId);
-//    }
-
-//    @Override
-//    public int compareTo(Order second) {
-//        return this.waiter.compareTo(second.waiter);
-//    }
-
-
-
 }

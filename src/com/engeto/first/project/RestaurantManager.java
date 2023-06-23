@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -65,12 +66,12 @@ public class RestaurantManager {
 
 
     // 3. Celkovou cenu objednávek pro jednotlivé číšníky (u každého číšníka bude počet jeho zadaných objednávek).
-    public double getTotalPricePerWaiter(Waiter waiter) {
-        double totalPricePerWaiter = 0.0;
+    public BigDecimal getTotalPricePerWaiter(Waiter waiter) {
+        BigDecimal totalPricePerWaiter = new BigDecimal(0);
         for (Orders orders : this.ordersLists) {
             for (Order order : orders.getOrders()) {
                 if (order.getWaiterId() == waiter.getId())
-                    totalPricePerWaiter += order.getTotalPrice();
+                    totalPricePerWaiter = totalPricePerWaiter.add(order.getTotalPrice());
             }
         }
         return totalPricePerWaiter;
@@ -91,7 +92,7 @@ public class RestaurantManager {
     public void printTotalPriceAndOrdersPerWaiter() {
         System.out.println("\n*** Seznam číšníků a jejich statistiky ***");
         for (Waiter waiter : waitersList) {
-            double totalPrice = this.getTotalPricePerWaiter(waiter);
+            BigDecimal totalPrice = this.getTotalPricePerWaiter(waiter);
             int totalOrders = this.getTotalOrdersPerWaiter(waiter);
 
             System.out.println("\tČíšník č. " + waiter.getId() + " -> Celková cena objednávek = " + totalPrice + " Kč\t(počet objednávek: " + totalOrders + ")");
