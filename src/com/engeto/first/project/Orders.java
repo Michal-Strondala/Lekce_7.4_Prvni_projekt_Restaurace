@@ -1,28 +1,24 @@
 package com.engeto.first.project;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Orders  {
 
     //Atributy
-    private int tableNumber;
+    private Table table;
     private ArrayList<Order> orders = new ArrayList<>();
 
 
     // Konstruktory
-    public Orders(int tableNumber)
+    public Orders(Table table)
     {
-        this.tableNumber = tableNumber;
+        this.table = table;
     }
 
     // Metody
-    public int getTableNumber()
-    {
-        return this.tableNumber;
+
+    public int getTableNumber() {
+        return table.getNumber();
     }
 
     public void addOrder(Order order)

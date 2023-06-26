@@ -31,8 +31,13 @@ public class Main {
             RestaurantManager manager = new RestaurantManager();
             manager.setWaiters();
 
+            // Vytvoření stolů
+            manager.setTables(1);
+            manager.setTables(4);
+
+
             // Vytvoření objednávky pro stůl č. 4
-            Orders orderForTable4 = new Orders(4);
+            Orders orderForTable4 = new Orders(manager.getTable(4));
 
             if(currentMenu.isDishFromCurrentMenu(kofola))
             {
@@ -49,7 +54,7 @@ public class Main {
             manager.addOrders(orderForTable4);
 
             // Vytvoření objednávky pro stůl č. 1
-            Orders orderForTable1 = new Orders(1);
+            Orders orderForTable1 = new Orders(manager.getTable(1));
 
             if(currentMenu.isDishFromCurrentMenu(kofola))
             {
@@ -90,7 +95,7 @@ public class Main {
 
             // 6. Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku).
             try {
-                manager.saveListOfOrdersToFile(Settings.ordersFileName());
+                manager.saveListOfOrdersToFile(Settings.ordersFileName(), 4);
             } catch (RestaurantException e) {
                 System.err.println(e.getLocalizedMessage());
             }

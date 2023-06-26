@@ -11,6 +11,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class RestaurantManager {
+
+    List<Table> tablesList = new ArrayList<>();
     List<Waiter> waitersList = new ArrayList<>();
 
 
@@ -166,14 +168,20 @@ public class RestaurantManager {
 
     // 6. Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku).
 
-    public void saveListOfOrdersToFile(String filename) throws RestaurantException {
+    public void saveListOfOrdersToFile(String filename, int tableNumber) throws RestaurantException {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
             for (Orders orders : this.ordersLists) {
-                writer.println("** Objednávky pro stůl č. " + orders.getTableNumber() + " **" +
-                        "\n****" +
-                        orders +
-                        "\n******"
-                );
+                if (orders.getTableNumber() == tableNumber) {
+                    String tableNumberString = String.valueOf(orders.getTableNumber());
+                    if (tableNumberString.length() < 2) {
+                        tableNumberString = " " + tableNumberString;
+                    }
+                    writer.println("** Objednávky pro stůl č. " + tableNumberString + " **" +
+                            "\n****" +
+                            orders +
+                            "\n******"
+                    );
+                }
             }
         } catch (IOException e) {
             throw new RestaurantException("Chyba při zápisu do souboru " + filename + ": " + e.getLocalizedMessage());
@@ -199,4 +207,16 @@ public class RestaurantManager {
         throw new RestaurantException("Číšník s číslem: " + waiterId + " neexistuje.");
     }
 
+    public Table getTable(int tableNumber) throws RestaurantException {
+        for (Table table : tablesList) {
+            if (table.getNumber() == tableNumber) {
+                return table;
+            }
+        }
+        throw new RestaurantException("Stůl s číslem: " + tableNumber + " neexistuje.");
+    }
+
+    public void setTables(int tableNumber) {
+        this.tablesList.add(new Table(tableNumber));
+    }
 }
