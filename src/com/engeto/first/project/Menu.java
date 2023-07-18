@@ -1,10 +1,5 @@
 package com.engeto.first.project;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
 public class Menu extends Cookbook{
 
     // region Metoda k ověření zda je vybraný pokrm z aktuálního menu
@@ -16,16 +11,6 @@ public class Menu extends Cookbook{
             }
         }
         throw new RestaurantException("Toto jídlo [" + currentDish.getTitle() + "] není součástí aktuálního menu.");
-    }
-    // endregion
-
-    // region Metoda k odstranění pokrmu z aktuálního menu
-    public void removeDishFromCurrentMenu (Dish currentDish) {
-        for (Dish dish : this) {
-            if (dish.getTitle().equals(currentDish.getTitle())) {
-                this.remove(currentDish);
-            }
-        }
     }
     // endregion
 
@@ -41,18 +26,14 @@ public class Menu extends Cookbook{
                     dish.getTitle() +
                     " = Cena: " +
                     dish.getPrice() + " Kč," +
-                    Settings.delimiter() + "Čas přípravy: " +
+                    Settings.DELIMITER + "Čas přípravy: " +
                     dish.getPreparationTimeInMinutes() + " min," +
-                    Settings.delimiter() + "Fotografie: " +
+                    Settings.DELIMITER + "Fotografie: " +
                     dish.getImage() + "," +
-                    Settings.delimiter() + "Kategorie: " +
+                    Settings.DELIMITER + "Kategorie: " +
                     dish.getCategory().getDescription());
             i++;
         }
         return returnString;
     }
-
-
-
-
 }

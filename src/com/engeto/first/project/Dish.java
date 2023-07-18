@@ -1,15 +1,17 @@
 package com.engeto.first.project;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dish /*jídla*/ extends Cookbook {
     // region Atributy
-    private int dishId; // jedinecne id jidla neco jako carovy kod
+    private int dishId; // jedinečné id jídla (něco jako čárový kód)
     private String title; // název jídla
     private BigDecimal price; // cena
     private int preparationTimeInMinutes; // přibližná doba přípravy v min
-    private String image; // název souboru ve formátu: bolonske-spagety-01
+    private String image; // název souboru fotografie ve formátu: bolonske-spagety-01
+    private List<String> images = new ArrayList<>(); // Seznam více fotografií
     private Category category;
     // endregion
 
@@ -26,10 +28,26 @@ public class Dish /*jídla*/ extends Cookbook {
             }
         this.category = category;
     }
+
+    // Konstruktor pro vložení seznamu více obrázků
+    public Dish(int dishId, String title, BigDecimal price, int preparationTimeInMinutes, List<String> images, Category category) throws RestaurantException {
+        this.dishId = dishId;
+        this.title = title;
+        this.price = price;
+        this.preparationTimeInMinutes = preparationTimeInMinutes;
+        this.images = images;
+            if (images.isEmpty()) {
+                throw new RestaurantException("Je nutné vložit fotografii.");
+            }
+        this.category = category;
+    }
+
+    // Konstruktor, kde je obrázek prázdný
     public Dish(int dishId, String title, BigDecimal price, int preparationTimeInMinutes, Category category) throws RestaurantException {
         this(dishId, title, price, preparationTimeInMinutes, "blank", category);
     }
 
+    // Konstruktor pro pokrm načtený ze souboru.
     public Dish(String title, BigDecimal price) {
         this.title = title;
         this.price = price;
@@ -43,11 +61,30 @@ public class Dish /*jídla*/ extends Cookbook {
     public String toString() {
             return title;
     }
+
+
+    // region Metoda k odstranění fotografie z pokrmu, ale tak, aby tam vždy zůstala alespoň jedna.
+    public void removeImage(String image) throws RestaurantException {
+        try {
+            List<String> images = getImages();
+            if (images.size() > 1) {
+                images.remove(image);
+                System.out.println("Obrázek " + image + " byl odstraněn.");
+                this.setImages(images); // Aktualizujeme seznam obrázků
+            } else {
+                throw new RestaurantException("Musí zůstat alespoň jedna fotografie.");
+            }
+        } catch (Exception e) {
+            throw new RestaurantException("Chyba při odstraňování obrázku: " + e.getMessage());
+        }
+    }
+    // endregion
+
     // endregion
 
     // region Přístupové metody
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -63,10 +100,10 @@ public class Dish /*jídla*/ extends Cookbook {
     }
 
     public String getPreparationTimeInMinutes() {
-        if (preparationTimeInMinutes == 0) {
+        if (this.preparationTimeInMinutes == 0) {
             return "neznámé";
         }
-        return String.valueOf(preparationTimeInMinutes);
+        return String.valueOf(this.preparationTimeInMinutes);
     }
 
     public void setPreparationTimeInMinutes(int preparationTimeInMinutes) {
@@ -74,7 +111,7 @@ public class Dish /*jídla*/ extends Cookbook {
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
 
     public void setImage(String image) {
@@ -82,7 +119,7 @@ public class Dish /*jídla*/ extends Cookbook {
     }
 
     public Category getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(Category category) {
@@ -90,11 +127,32 @@ public class Dish /*jídla*/ extends Cookbook {
     }
 
     public int getDishId() {
-        return dishId;
+        return this.dishId;
     }
 
     public void setDishId(int dishId) {
         this.dishId = dishId;
+    }
+
+    public List<String> getImages() {
+        return this.images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public void addImage(String name) {
+        this.images.add(name);
+
+        //kdyz hlavni image neni, priradim ho
+        if(this.image == null) this.image = name;
+    }
+
+    public void setMainImage(String name) {
+        this.image = name;
+
+        if (!this.images.contains(name)) this.images.add(name);
     }
     // endregion
 }

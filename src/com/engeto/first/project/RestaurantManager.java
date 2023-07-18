@@ -41,7 +41,7 @@ public class RestaurantManager extends ReaderFromFile {
     
     // region Metoda k vypsání zásobníku jídel (cookbook).
     public void printCookbook() {
-        System.out.println(Settings.delimiter());
+        System.out.println(Settings.DELIMITER);
         System.out.println("** Zásobník jídel **");
         System.out.print("\t****");
         System.out.println(cookbook);
@@ -50,7 +50,7 @@ public class RestaurantManager extends ReaderFromFile {
 
     // region Metoda k vypsání aktuálního menu.
     public void printCurrentMenu() {
-        System.out.println(Settings.delimiter());
+        System.out.println(Settings.DELIMITER);
         System.out.println("** Aktuální menu **");
         System.out.print("\t****");
         System.out.println(currentMenu);
@@ -186,14 +186,15 @@ public class RestaurantManager extends ReaderFromFile {
 
     public void getListOfOrderedDishes() {
         Set<String> setOfOrderedDishes = new HashSet<>();
-        System.out.println("Seznam jídel, které byly dnes objednány:\n");
+        System.out.println("Seznam jídel, které byly dnes objednány:");
         for (Orders orders : this.ordersLists) {
             for (Order order : orders.getOrders()) {
                 setOfOrderedDishes.add(order.getDishFromCurrentMenu().getTitle());
             }
         }
-        System.out.println("Počet objednaných jídel: " + setOfOrderedDishes.size());
+        System.out.println("Počet objednaných jídel: " + setOfOrderedDishes.size()+ "\n");
         setOfOrderedDishes.forEach(System.out::println);
+        System.out.println("\n");
     }
     // endregion
 
@@ -233,12 +234,12 @@ public class RestaurantManager extends ReaderFromFile {
                         dish.getTitle() +
                         " = Cena: " +
                         dish.getPrice() + " Kč" + "," +
-                        Settings.delimiter() + "Čas přípravy: " +
+                        Settings.DELIMITER + "Čas přípravy: " +
                         dish.getPreparationTimeInMinutes() +
                         " min" + "," +
-                        Settings.delimiter() + "Fotografie: " +
+                        Settings.DELIMITER + "Fotografie: " +
                         dish.getImage() + "," +
-                        Settings.delimiter() + "Kategorie: " +
+                        Settings.DELIMITER + "Kategorie: " +
                         dish.getCategory().getDescription()
                 );
                 i++;
@@ -261,12 +262,12 @@ public class RestaurantManager extends ReaderFromFile {
                         dish.getTitle() +
                         " = Cena: " +
                         dish.getPrice() + " Kč" + "," +
-                        Settings.delimiter() + "Čas přípravy: " +
+                        Settings.DELIMITER + "Čas přípravy: " +
                         dish.getPreparationTimeInMinutes() +
                         " min" + "," +
-                        Settings.delimiter() + "Fotografie: " +
+                        Settings.DELIMITER + "Fotografie: " +
                         dish.getImage() + "," +
-                        Settings.delimiter() + "Kategorie: " +
+                        Settings.DELIMITER + "Kategorie: " +
                         dish.getCategory().getDescription()
                 );
                 i++;
@@ -393,9 +394,17 @@ public class RestaurantManager extends ReaderFromFile {
         Dish nanukMisa;
         try {
             System.out.println("*** Vytvoření a zpracování objednávek z PRVNÍ části projektu ***");
-            System.out.println(Settings.textSeparator());
+            System.out.println(Settings.TEXT_SEPARATOR);
             // Vytvoření objektu dish
             kofola = new Dish(1000, "Kofola velká", BigDecimal.valueOf(32.5), 4, Category.DRINK);
+
+            //ukázka práce s obrázky u jídla
+            kofola.addImage("bolonske-spagety-01");
+            kofola.addImage("bolonske-spagety-02");
+            kofola.addImage("bolonske-spagety-03");
+            kofola.setMainImage("bolonske-spagety-03");
+            kofola.removeImage("bolonske-spagety-01");
+
             pizzaGrande = new Dish(2000, "Pizza Grande", BigDecimal.valueOf(130), 41, Category.FOOD);
             nanukMisa = new Dish(3000, "Nanuk Míša", BigDecimal.valueOf(30), 5, Category.FOOD);
 
@@ -404,63 +413,73 @@ public class RestaurantManager extends ReaderFromFile {
             this.cookbook.add(pizzaGrande);
             this.cookbook.add(nanukMisa);
 
+            //Kuchař má možnost všechna jídla z menu vymazat naráz.
+            this.clearAllDishesFromCurrentMenu();
+
             // Přidání dishe do Menu z cookbooku a výpis menu
-            this.currentMenu.add(kofola);
-            this.currentMenu.add(pizzaGrande);
-            this.currentMenu.add(nanukMisa);
+            if(this.cookbook.contains(kofola))
+                this.currentMenu.add(kofola);
+
+            if(this.cookbook.contains(pizzaGrande))
+                this.currentMenu.add(pizzaGrande);
+
+            if(this.cookbook.contains(nanukMisa))
+                this.currentMenu.add(nanukMisa);
 
             // Najmutí číšníků a přidání jich do seznamu číšníků:
-            setWaiters(2);
-            setWaiters(3);
-            setWaiters(4);
+            this.setWaiters(2);
+            this.setWaiters(3);
+            this.setWaiters(4);
 
             // Vytvoření stolů
-            setTables(4);
+            this.setTables(4);
 
             // Vytvoření objednávky pro stůl č. 4
             Orders orderForTable4 = new Orders(getTable(4));
 
+            ////Objednávat jdou pouze jídla, která jsou v aktuálním menu — ostatní jídla ze zásobníku objednat nelze.
+            //Objednávky se vztahují vždy ke konkrétnímu stolu — resp. k zákazníkům, kteří u stolu sedí.
             if (currentMenu.isDishFromCurrentMenu(kofola)) {
-                orderForTable4.addOrder(new Order(4, getWaiter(3), LocalTime.of(15, 25), LocalTime.of(15, 29), kofola, 4, ""));
+                orderForTable4.addOrder(new Order(4, getWaiter(3), LocalTime.of(15, 25), LocalTime.of(15, 29), kofola, 4, "Je divnej"));
             }
             if (currentMenu.isDishFromCurrentMenu(pizzaGrande)) {
-                orderForTable4.addOrder(new Order(4, getWaiter(4), LocalTime.of(15, 29), LocalTime.of(16, 10), pizzaGrande, 1, ""));
+                orderForTable4.addOrder(new Order(4, getWaiter(4), LocalTime.of(15, 29), LocalTime.of(16, 10), pizzaGrande, 1, "Smrdi"));
             }
             if (currentMenu.isDishFromCurrentMenu(nanukMisa)) {
-                orderForTable4.addOrder(new Order(4, getWaiter(2), LocalTime.of(17, 12), LocalTime.of(17, 18), nanukMisa, 1, ""));
+                orderForTable4.addOrder(new Order(4, getWaiter(2), LocalTime.of(17, 12), LocalTime.of(17, 18), nanukMisa, 1, "Ma alergii an arasidy"));
             }
-            addOrders(orderForTable4);
+            this.addOrders(orderForTable4);
 
             // Výpis všech objednávek
-            printAllOrders();
+            this.printAllOrders();
 
             // *** Požadované výstupy ***
             // 1. Kolik objednávek je aktuálně rozpracovaných a nedokončených.
-            currentUnfinishedOrders();
+            this.currentUnfinishedOrders();
 
             // 2.1 Seřazení podle času zadání objednávky(orderedTime)
-            sortByOrderedTime();
+            this.sortByOrderedTime();
             System.out.println("\n*** Seřazení podle času zadání objednávky ***");
-            printAllOrders();
+            this.printAllOrders();
 
             // 2.2 Seřazení podle ID číšníka (waiterId)
-            sortByWaiterId();
+            this.sortByWaiterId();
             System.out.println("\n*** Seřazení podle ID číšníka ***");
-            printAllOrders();
+            this.printAllOrders();
 
             // 3. Výpis celkových cen objednávek a jejich počet na číšníka
-            printTotalPriceAndOrdersPerWaiter();
+            this.printTotalPriceAndOrdersPerWaiter();
 
             // 4. Průměrná doba zpracování objednávek, které byly zadány v určitém časovém období.
-            //LocalTime[] timePeriod = readPeriod("Zadejte časové období pro výpočet průměrné doby zpracování objednávek (ve formátu HH:mm): ", "10:00", "22:00");
-            //averageTimeOfCompletingOfOrders(timePeriod);
+            LocalTime[] timePeriod = readPeriod("Zadejte časové období pro výpočet průměrné doby zpracování objednávek (ve formátu HH:mm): ", "10:00", "22:00");
+            this.averageTimeOfCompletingOfOrders(timePeriod);
 
             // 5. Seznam jídel, které byly dnes objednány. Bez ohledu na to, kolikrát byly objednány.
-            getListOfOrderedDishes();
+            this.getListOfOrderedDishes();
 
             // 6. Export seznamu objednávek pro jeden stůl ve formátu (například pro výpis na obrazovku).
             try {
-                saveListOfOrdersToFile(Settings.firstOrdersFileName(), 4);
+                this.saveListOfOrdersToFile(Settings.FIRST_ORDERS_FILENAME, 4);
             } catch (RestaurantException e) {
                 System.err.println(e.getLocalizedMessage());
             }
@@ -472,13 +491,15 @@ public class RestaurantManager extends ReaderFromFile {
     // endregion
 
         // region *** Čast zadání projektu "Testovací scénář: Kód pro ověření" ***
-        // 1. Načti stav evidence z disku. Pokud se aplikace spouští poprvé a soubory neexistují, budou veškeré seznamy a repertoár zatím prázdné. (Aplikace nepotřebuje předvytvořené žádné soubory.)
+        // 1. Načti stav evidence z disku. Pokud se aplikace spouští poprvé a soubory neexistují,
+        // budou veškeré seznamy a repertoár zatím prázdné. (Aplikace nepotřebuje předvytvořené žádné soubory.)
 
         // region 2. Připrav testovací data. Vlož do systému:
         public void doAllSecondTasks() {
             try {
                 System.out.println("*** Vytvoření a zpracování objednávek z DRUHÉ části projektu ***");
-                System.out.println(Settings.textSeparator());
+                System.out.println(Settings.TEXT_SEPARATOR);
+
                 // region 2.1 dva číšníky
                 setWaiters(1);
                 setWaiters(5);
@@ -507,7 +528,7 @@ public class RestaurantManager extends ReaderFromFile {
                 // region 2.4 První a třetí jídlo zařaď do aktuálního menu, druhé jídlo nikoli. Případné další můžeš zařadit dle potřeby.
                 currentMenu.add(kurizek);
                 currentMenu.add(pstruh);
-                currentMenu.add(hranolky);
+                //currentMenu.add(hranolky); // dle zadání není v aktuálním menu a vyhodí výjimku
                 // endregion
 
                 // region 2.5 Vytvoř alespoň tři objednávky pro stůl číslo 15 a jednu pro stůl číslo 2.
@@ -517,38 +538,36 @@ public class RestaurantManager extends ReaderFromFile {
                     orderForTable15.addOrder(new Order(15, getWaiter(1), LocalTime.of(20, 05), LocalTime.of(20, 40), kurizek, 1, ""));
                 }
                 if (currentMenu.isDishFromCurrentMenu(kurizek)) {
-                    orderForTable15.addOrder(new Order(15, getWaiter(1), LocalTime.of(20, 05), LocalTime.of(20, 42), kurizek, 1, ""));
+                    orderForTable15.addOrder(new Order(15, getWaiter(5), LocalTime.of(20, 05), LocalTime.of(20, 42), kurizek, 1, ""));
                 }
                 if (currentMenu.isDishFromCurrentMenu(pstruh)) {
-                    orderForTable15.addOrder(new Order(15, getWaiter(1), LocalTime.of(20, 05), LocalTime.of(20,50 ), pstruh, 1, ""));
+                    orderForTable15.addOrder(new Order(15, getWaiter(1), LocalTime.of(20, 05), pstruh,1, ""));
                 }
-                addOrders(orderForTable15);
+                this.addOrders(orderForTable15);
 
 
-                Orders orderForTable2 = new Orders(getTable(2));
-
-                if (currentMenu.isDishFromCurrentMenu(pstruh)) {
-                    orderForTable2.addOrder(new Order(2, getWaiter(5), LocalTime.of(19, 34), LocalTime.of(20, 19), pstruh, 2, ""));
-                } else {
-                    System.err.println("Toto jídlo není součástí aktuálního menu.");
-                }
-                if (currentMenu.isDishFromCurrentMenu(kurizek)) {
-                    orderForTable2.addOrder(new Order(2, getWaiter(5), LocalTime.of(19, 35), LocalTime.of(20, 15), hranolky, 2, ""));
-                } else {
-                    System.err.println("Toto jídlo není součástí aktuálního menu.");
-                }
-                // endregion
-
-                // region 3. Vyzkoušej přidat objednávku jídla, které není v menu — aplikace musí ohlásit chybu.
-                if (currentMenu.isDishFromCurrentMenu(hranolky)) {
-                    orderForTable2.addOrder(new Order(2, getWaiter(5), LocalTime.of(19, 35), LocalTime.of(20, 14), hranolky, 2, ""));
-                } else {
-                    System.err.println("Toto jídlo není součástí aktuálního menu.");
-                }
-                addOrders(orderForTable2);
+                //Vyzkoušej přidat objednávku jídla, které není v menu — aplikace musí ohlásit chybu.
+//                if (currentMenu.isDishFromCurrentMenu(hranolky)) //není v aktuálním menu
+//                {
+//                    //tady se vlastne vubec nedostanu
+//                    Orders orderForTable2 = new Orders(getTable(2));
+//                    orderForTable2.addOrder(new Order(2, getWaiter(5), LocalTime.of(19, 34), hranolky, 2, ""));
+//                }
                 // endregion
 
                 // region 4. Proveď uzavření objednávky.
+                for(Orders orders : this.ordersLists)
+                {
+                    for(Order order : orders.getOrders())
+                    {
+                        //pokud není zavřená
+                        if(!order.isFinished())
+                        {
+                            //zavřu ji
+                            order.close();
+                        }
+                    }
+                }
                 // endregion
 
                 // region 5. Použij všechny připravené metody pro získání informací pro management — údaje vypisuj na obrazovku.
@@ -577,8 +596,7 @@ public class RestaurantManager extends ReaderFromFile {
 
                 // region 6. Změněná data ulož na disk. Po spuštění aplikace musí být data opět v pořádku načtena.
                 try {
-                    saveListOfOrdersToFile(Settings.secondOrdersFileName(), 15);
-                    saveListOfOrdersToFile(Settings.secondOrdersFileName(), 2);
+                    this.saveListOfOrdersToFile(Settings.SECOND_ORDERS_FILENAME, 15);
                 } catch (RestaurantException e) {
                     System.err.println(e.getLocalizedMessage());
                 }
@@ -590,7 +608,7 @@ public class RestaurantManager extends ReaderFromFile {
         // endregion
     // endregion
 
-        // region Metoda k odstranění jídla/pití z aktuálního menu
+    // region Metoda k odstranění jídla/pití z aktuálního menu
     public void removeDishFromCurrentMenu(String name) throws RestaurantException {
         try {
             boolean removed = false;
@@ -610,6 +628,18 @@ public class RestaurantManager extends ReaderFromFile {
         } catch (IllegalStateException e) {
             throw new RestaurantException("Zkuste jiný název jídla/pití.");
         }
+    }
+    // endregion
+
+    // region Metoda k odstranění všech jídel z aktuálního menu
+    public void clearAllDishesFromCurrentMenu() throws RestaurantException {
+            if (!currentMenu.isEmpty()) {
+                currentMenu.clear();
+                System.out.println("\nAktuální menu je nyní prázdné!\n");
+            } else {
+                System.err.println("Aktuální menu již je prázdné!");
+            }
+
     }
     // endregion
 
@@ -656,6 +686,26 @@ public class RestaurantManager extends ReaderFromFile {
         }
     }
     // endregion
+
+    // region Metoda k odstranění fotografie z pokrmu, ale tak, aby tam vždy zůstala alespoň jedna.
+    public void removeImageFromDish(String title, String image) throws RestaurantException {
+        try {
+            Iterator<Dish> iterator = cookbook.iterator();
+            while (iterator.hasNext()) {
+                Dish dish = iterator.next();
+                if (dish.getTitle().contains(title)) {
+                    dish.setImage(image);
+                    dish.removeImage(image);
+                    System.out.println("\n" + title + ": fotografie odstraněna\n");
+                }
+            }
+        } catch (Exception e) {
+            throw new RestaurantException("Chyba při aktualizaci jídla: " + e.getMessage());
+        }
+    }
+    // endregion
+
+
 
 }
 

@@ -1,12 +1,8 @@
 package com.engeto.first.project;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalTime;
-import java.util.Objects;
-
-import static java.math.RoundingMode.HALF_UP;
 
 public class Order {
     // region Atributy
@@ -102,10 +98,13 @@ public class Order {
 
     // region Metoda k oveření zda je objednávka již dokončená
     public boolean isFinished() {
-        if (this.getFulfilmentTime() != null)
-            return true;
-
+        if (this.getFulfilmentTime() != null) return true;
         return false;
+    }
+
+    public void close() {
+        LocalTime timeFinished = this.getOrderedTime().plusMinutes(60);
+        this.setFulfilmentTime(timeFinished);
     }
     // endregion
 }

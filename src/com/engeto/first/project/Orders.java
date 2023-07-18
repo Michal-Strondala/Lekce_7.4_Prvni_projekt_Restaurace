@@ -49,10 +49,10 @@ public class Orders  {
                                 order.getDishFromCurrentMenu() +
                                 " " +
                                 this.getTotalPriceAsString(order) +
-                                Settings.delimiter() +
+                                Settings.DELIMITER +
                                 order.getOrderedTime() +
                                 this.orderClosed(order) +
-                                Settings.delimiter() +
+                                Settings.DELIMITER +
                                 " číšník č. " + order.getWaiterId());
                         i++;
                 }

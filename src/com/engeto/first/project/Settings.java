@@ -1,28 +1,15 @@
 package com.engeto.first.project;
 import java.io.File;
 
-
 public class Settings {
-    public static String cookbookFileName() {
-        return "zasobnik_jidla.txt";
-    }
 
-    public static String menuFileName() {
-        return "aktualni_menu.txt";
-    }
-
-    public static String firstOrdersFileName() {return "seznam_objednavek-prvni-cast.txt";}
-    public static String secondOrdersFileName() {return "seznam_objednavek-druha-cast.txt";}
-
-    public static String fileToBeRead() {return "test-objednavek-k-nacteni.txt";}
-
-    public static String delimiter()   {
-        return "\t";
-    }
-
-    public static String textSeparator() {
-        return "\n=======================\n";
-    }
+    public static final String COOKBOOK_FILENAME = "zasobnik_jidla.txt";
+    public static final String MENU_FILE_NAME = "aktualni_menu.txt";
+    public static final String FIRST_ORDERS_FILENAME = "seznam_objednavek-prvni-cast.txt";
+    public static final String SECOND_ORDERS_FILENAME = "seznam_objednavek-druha-cast.txt";
+    public static final String FILE_TO_BE_READ = "test-objednavek-k-nacteni.txt";
+    public static final String DELIMITER = "\t";
+    public static final String TEXT_SEPARATOR = "\n=======================\n";
 
     public static boolean fileExists(String filePath) {
         File file = new File(filePath);

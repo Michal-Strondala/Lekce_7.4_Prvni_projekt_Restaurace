@@ -11,24 +11,17 @@ public class Main {
 
         // v main bude, jen inicializace manageru a vypsání ze souboru nebo nastavení defaultních dat, nic více
 
-        if ((Settings.fileExists(Settings.fileToBeRead()))) {
-            System.out.println(Settings.textSeparator());
-            System.out.println("Soubor existuje, načítam vše ze souboru " + Settings.fileToBeRead());
-            manager.loadFromFile(Settings.fileToBeRead());
+        if (Settings.fileExists(Settings.FILE_TO_BE_READ)) {
+            System.out.println(Settings.TEXT_SEPARATOR);
+            System.out.println("Soubor existuje, načítam vše ze souboru " + Settings.FILE_TO_BE_READ);
+            manager.loadFromFile(Settings.FILE_TO_BE_READ);
             manager.printAllOrders();
         } else {
-            System.err.println("Soubor " + Settings.fileToBeRead() + " neexistuje, vytvořim defaultni data a soubor vytvořim");
-            System.out.println(Settings.textSeparator());
+            System.err.println("Soubor " + Settings.FILE_TO_BE_READ + " neexistuje, vytvořim defaultni data a soubor vytvořim");
+            System.out.println(Settings.TEXT_SEPARATOR);
 
             // toto udělá všechny operace z první části zadání
             manager.doAllFirstTasks();
-
-            // tady jen test, zda se povedlo uložit soubor prvních tasků
-//            System.out.println(Settings.textSeparator());
-//            System.out.println("Načtené objednávky ze souboru:");
-//            manager.clearOrders();
-//            manager.loadFromFile(Settings.fileToBeRead());
-//            manager.printAllOrders();
         }
 
         // toto udělá všechny operace z druhé části zadání:
@@ -36,7 +29,7 @@ public class Main {
 
         // Uložení jídel do souboru zásobník-jídel.txt:
         try {
-            manager.saveCookbookToFile(Settings.cookbookFileName());
+            manager.saveCookbookToFile(Settings.COOKBOOK_FILENAME);
         } catch (RestaurantException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +37,7 @@ public class Main {
         manager.printCookbook();
         // Uložení jídel do souboru zásobník-jídel.txt:
         try {
-            manager.saveCurrentMenuToFile(Settings.menuFileName());
+            manager.saveCurrentMenuToFile(Settings.MENU_FILE_NAME);
         } catch (RestaurantException e) {
             throw new RuntimeException(e);
         }

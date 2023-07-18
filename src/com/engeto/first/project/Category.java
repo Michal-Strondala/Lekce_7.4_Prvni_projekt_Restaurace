@@ -1,7 +1,10 @@
 package com.engeto.first.project;
 
 public enum Category {
-    FOOD("jídlo"), DRINK("pití"), SIDE_DISH("příloha"), UNCATEGORIZED("nezařazeno");
+    FOOD("jídlo"),
+    DRINK("pití"),
+    SIDE_DISH("příloha"),
+    UNCATEGORIZED("nezařazeno");
 
     private String description;
 

@@ -1,15 +1,8 @@
 package com.engeto.first.project;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Cookbook /*zásobník jídel*/ extends ArrayList<Dish> {
-    // Metody
-    // Kuchaři mají možnost některá jídla ze zásobníku vyřadit, přidat, nebo upravit.
-    // Má také jít přidat nebo odebrat fotografie, vždy by ale alespoň jedna měla zůstat.
 
     @Override
     public String toString() {
@@ -23,11 +16,11 @@ public class Cookbook /*zásobník jídel*/ extends ArrayList<Dish> {
                     dish.getTitle() +
                     " = Cena: " +
                     dish.getPrice() + " Kč," +
-                    Settings.delimiter() + "Čas přípravy: " +
+                    Settings.DELIMITER + "Čas přípravy: " +
                     dish.getPreparationTimeInMinutes() + " min," +
-                    Settings.delimiter() + "Fotografie: " +
+                    Settings.DELIMITER + "Fotografie: " +
                     dish.getImage() + "," +
-                    Settings.delimiter() + "Kategorie: " +
+                    Settings.DELIMITER + "Kategorie: " +
                     dish.getCategory().getDescription());
             i++;
         }
