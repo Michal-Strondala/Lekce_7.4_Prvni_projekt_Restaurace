@@ -9,8 +9,8 @@ public class Main {
         RestaurantManager manager = new RestaurantManager();
 
 
-        // v main bude, jen inicializace manageru a vypsání ze souboru nebo nastavení defaultních dat, nic více
-
+        // Zde je podmínka, kdy se buď načtou data ze souboru FILE_TO_BE_READ, pokud existuje, jinak se vytvoří nová data metodou doALLFirstTask(),
+        // která provede veškeré metody z první části zadání projektu.
         if (Settings.fileExists(Settings.FILE_TO_BE_READ)) {
             System.out.println(Settings.TEXT_SEPARATOR);
             System.out.println("Soubor existuje, načítam vše ze souboru " + Settings.FILE_TO_BE_READ);
