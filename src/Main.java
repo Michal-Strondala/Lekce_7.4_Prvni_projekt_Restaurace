@@ -3,6 +3,7 @@ import com.engeto.first.project.*;
 import java.math.BigDecimal;
 
 public class Main {
+    // uživatelské jméno na Discordu: michalstr (Michal Stř.)
     public static void main(String[] args) {
 
         // Vytvoření manažera
