@@ -1,0 +1,10 @@
+** Objednávky pro stůl č.  4 **
+****
+1. Pivo Radegast 1x (35 Kč):    19:45-19:55 číšník č. 1
+2. Limonáda 2x (80 Kč): 15:25-15:29 číšník č. 3
+******
+** Objednávky pro stůl č.  8 **
+****
+1. Pivo Plzen (34 Kč):    19:45-19:55 číšník č. 5
+2. Káva 2x (80 Kč): 15:25-15:29 číšník č. 15
+******

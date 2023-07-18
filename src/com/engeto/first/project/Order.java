@@ -9,16 +9,16 @@ import java.util.Objects;
 import static java.math.RoundingMode.HALF_UP;
 
 public class Order {
-    // Atributy
+    // region Atributy
     private Waiter waiter; // číslo číšníka
     private LocalTime orderedTime; // čas zadání objednávky
     private LocalTime fulfilmentTime; // čas vyřízení objednávky
     private Dish dishFromCurrentMenu; // objednané jídlo/pití z menu
     private String note; // poznámka zákazníka
     private int orderedAmount; // počet kusů v objednávce
+    // endregion
 
-
-    // Konstruktory
+    // region Konstruktory
 
     public Order(int tableNumber, Waiter waiter, LocalTime orderedTime, LocalTime fulfilmentTime, Dish dishFromCurrentMenu, int orderedAmount, String note) throws RestaurantException {
             if (tableNumber <= 0 || tableNumber > 30) {
@@ -40,16 +40,17 @@ public class Order {
         }
         this.waiter = waiter;
         this.orderedTime = orderedTime;
-        this.orderedAmount = orderedAmount;
         this.fulfilmentTime = null;
-        if (orderedAmount < 1)
-            throw new RestaurantException("Minimální počet je 1");
+        this.orderedAmount = orderedAmount;
+            if (orderedAmount < 1)
+                throw new RestaurantException("Minimální počet je 1");
         this.dishFromCurrentMenu = dishFromCurrentMenu;
         this.note = note;
     }
+    // endregion
 
 
-    //Přístupové metody
+    // region Přístupové metody
 
     public int getWaiterId() { return waiter.getId(); }
 
@@ -97,11 +98,14 @@ public class Order {
         BigDecimal totalPrice = dishFromCurrentMenu.getPrice().multiply(BigDecimal.valueOf(this.getOrderedAmount()));
         return totalPrice.setScale(0, RoundingMode.HALF_UP);
     }
+    // endregion
 
+    // region Metoda k oveření zda je objednávka již dokončená
     public boolean isFinished() {
         if (this.getFulfilmentTime() != null)
             return true;
 
         return false;
     }
+    // endregion
 }

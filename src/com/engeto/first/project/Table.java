@@ -2,16 +2,21 @@ package com.engeto.first.project;
 
 public class Table {
 
-    // Atributy
+    // region Atributy
     int number;
+    // endregion
 
-    // Konstruktor
+    // region Konstruktory
 
     public Table(int number) {
         this.number = number;
     }
 
-    // Přístupové metody
+    public Table() {
+    }
+    // endregion
+
+    // region Přístupové metody
 
     public int getNumber() {
         return number;
@@ -20,4 +25,5 @@ public class Table {
     public void setNumber(int number) {
         this.number = number;
     }
+    // endregion
 }

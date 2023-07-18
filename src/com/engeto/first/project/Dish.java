@@ -4,18 +4,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Dish /*jídla*/ extends Cookbook {
-    // Atributy
-
+    // region Atributy
     private int dishId; // jedinecne id jidla neco jako carovy kod
     private String title; // název jídla
     private BigDecimal price; // cena
     private int preparationTimeInMinutes; // přibližná doba přípravy v min
     private String image; // název souboru ve formátu: bolonske-spagety-01
     private Category category;
+    // endregion
 
 
-    // Konstruktory
-
+    // region Konstruktory
     public Dish(int dishId, String title, BigDecimal price, int preparationTimeInMinutes, String image, Category category) throws RestaurantException {
         this.dishId = dishId;
         this.title = title;
@@ -31,16 +30,22 @@ public class Dish /*jídla*/ extends Cookbook {
         this(dishId, title, price, preparationTimeInMinutes, "blank", category);
     }
 
+    public Dish(String title, BigDecimal price) {
+        this.title = title;
+        this.price = price;
+        this.image = "blank";
+        this.category = Category.UNCATEGORIZED;
+    }
+    // endregion
 
-    // Metody
+    // region Metody
     @Override
     public String toString() {
             return title;
     }
+    // endregion
 
-
-    // Přístupové metody
-
+    // region Přístupové metody
     public String getTitle() {
         return title;
     }
@@ -57,8 +62,11 @@ public class Dish /*jídla*/ extends Cookbook {
         this.price = price;
     }
 
-    public int getPreparationTimeInMinutes() {
-        return preparationTimeInMinutes;
+    public String getPreparationTimeInMinutes() {
+        if (preparationTimeInMinutes == 0) {
+            return "neznámé";
+        }
+        return String.valueOf(preparationTimeInMinutes);
     }
 
     public void setPreparationTimeInMinutes(int preparationTimeInMinutes) {
@@ -88,4 +96,5 @@ public class Dish /*jídla*/ extends Cookbook {
     public void setDishId(int dishId) {
         this.dishId = dishId;
     }
+    // endregion
 }

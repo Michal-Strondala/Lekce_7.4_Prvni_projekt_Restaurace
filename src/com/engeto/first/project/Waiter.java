@@ -1,17 +1,19 @@
 package com.engeto.first.project;
 
 public class Waiter {
-    // Atributy
+    // region Atributy
     int id;
+    // endregion
 
 
-    // Kontruktory
+    // region Kontruktory
     public Waiter(int id) {
         this.id = id;
     }
+    // endregion
 
 
-    // Metody
+    // region Metody
     public int getId() {
         return id;
     }
@@ -19,4 +21,5 @@ public class Waiter {
     public void setId(int id) {
         this.id = id;
     }
+    // endregion
 }

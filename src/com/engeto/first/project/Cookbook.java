@@ -11,14 +11,27 @@ public class Cookbook /*zásobník jídel*/ extends ArrayList<Dish> {
     // Kuchaři mají možnost některá jídla ze zásobníku vyřadit, přidat, nebo upravit.
     // Má také jít přidat nebo odebrat fotografie, vždy by ale alespoň jedna měla zůstat.
 
-    public void saveDishesToFile(String filename, List<Dish> cookbook) throws RestaurantException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
-            for (Dish dish : cookbook) {
-                writer.println(dish.toString());
-            }
-        } catch (IOException e) {
-            throw new RestaurantException("Nastala chyba při ukládání zásobníku jídla do souboru.");
+    @Override
+    public String toString() {
+        String returnString = "";
+        int i = 1;
+        // Vypsání každého pokrmu v zásobníku jídel
+        for (Dish dish : this) {
+            returnString += ("\n" +
+                    i +
+                    ". " +
+                    dish.getTitle() +
+                    " = Cena: " +
+                    dish.getPrice() + " Kč," +
+                    Settings.delimiter() + "Čas přípravy: " +
+                    dish.getPreparationTimeInMinutes() + " min," +
+                    Settings.delimiter() + "Fotografie: " +
+                    dish.getImage() + "," +
+                    Settings.delimiter() + "Kategorie: " +
+                    dish.getCategory().getDescription());
+            i++;
         }
+        return returnString;
     }
 
 }

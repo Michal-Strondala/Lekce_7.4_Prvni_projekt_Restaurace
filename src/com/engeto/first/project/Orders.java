@@ -4,18 +4,27 @@ import java.util.ArrayList;
 
 public class Orders  {
 
-    //Atributy
+    // region Atributy
     private Table table;
     private ArrayList<Order> orders = new ArrayList<>();
+    // endregion
 
 
-    // Konstruktory
+    // region Konstruktory
     public Orders(Table table)
     {
         this.table = table;
     }
 
-    // Metody
+    public Orders() {}
+    // endregion
+
+    // region Metody
+
+    public void setTable(Table table)
+    {
+        this.table = table;
+    }
 
     public int getTableNumber() {
         return table.getNumber();
@@ -26,22 +35,12 @@ public class Orders  {
         this.orders.add(order);
     }
 
-//    public void saveOrdersToFile(String filename, List<Order> orderList) throws RestaurantException {
-//        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
-//            for (Order order : orderList) {
-//                writer.println(order.toString());
-//            }
-//        } catch (IOException e) {
-//            throw new RestaurantException("Nastala chyba při ukládání objednávek do souboru.");
-//        }
-//    }
-
     @Override
     public String toString() {
 
         String returnString = "";
         int i = 1;
-        // Print orders for each table
+        // Vypsání objednávek pro každý stůl
 
                 for (Order order : this.orders) {
                         returnString += ("\n" +
@@ -62,17 +61,21 @@ public class Orders  {
         return returnString;
     }
 
+    // region Metoda k získání celkové ceny objednávky jako String
     private String getTotalPriceAsString(Order order) {
         if (order.getOrderedAmount() > 1)
             return order.getOrderedAmount() + "x (" + order.getTotalPrice()+" Kč):";
         else return " (" + order.getTotalPrice()+" Kč):";
     }
+    // endregion
 
+    // region Metoda k odlišení nedokončených objednávek při výpisu objednávek
     private String orderClosed(Order order) {
         if (order.getFulfilmentTime() == null)
-            return "- objednávka nedokončena";
+            return "-objednávka nedokončena";
         else return "-" + order.getFulfilmentTime();
     }
+    // endregion
 
     public ArrayList<Order> getOrders() {
         return orders;
@@ -81,4 +84,10 @@ public class Orders  {
     public void setOrders(ArrayList<Order> orders) {
         this.orders = orders;
     }
+
+    public void clear()
+    {
+        this.orders.clear();
+    }
+    // endregion
 }

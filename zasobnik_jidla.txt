@@ -1,0 +1,15 @@
+** Zásobník jídel **
+
+1. Pivo Radegast = Cena: 35 Kč,	Čas přípravy: neznámé min,	Fotografie: blank,	Kategorie: nezařazeno
+
+2. Limonáda = Cena: 40 Kč,	Čas přípravy: neznámé min,	Fotografie: blank,	Kategorie: nezařazeno
+
+3. Pivo Plzen = Cena: 34 Kč,	Čas přípravy: neznámé min,	Fotografie: blank,	Kategorie: nezařazeno
+
+4. Káva = Cena: 40 Kč,	Čas přípravy: neznámé min,	Fotografie: blank,	Kategorie: nezařazeno
+
+5. Kuřecí řízek obalovaný 150 g = Cena: 175 Kč,	Čas přípravy: 30 min,	Fotografie: blank,	Kategorie: jídlo
+
+6. Hranolky 150 g = Cena: 50 Kč,	Čas přípravy: 20 min,	Fotografie: blank,	Kategorie: příloha
+
+7. Pstruh na víně 200 g = Cena: 215 Kč,	Čas přípravy: 35 min,	Fotografie: blank,	Kategorie: jídlo
