@@ -1,5 +1,6 @@
 # Restaurace
 První projekt pro Engeto Academy Java kurz - Projekt Restaurace
+#
 Cíl: Model pro objednávky v restaraci
 Připrav třídy pro realizaci datového modelu sledování objednávek v restauraci. Vytvořený kód bude součástí backendu aplikace pro terminály, které ovládají číšníci a kuchaři.
 
